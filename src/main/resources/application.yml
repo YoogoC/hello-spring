@@ -1,0 +1,49 @@
+server:
+  port: 8180
+spring:
+  profiles:
+    active: default
+    messages:
+      encoding: UTF-8
+
+  datasource:
+    url: jdbc:mysql://tieba.yoogo.space:3307/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 199633
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet:
+        login-username: druid
+        login-password: druid
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: hello-spring #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /doc.html
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /druid/**
+      - /admin/login
+      - /admin/register
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:mapper/*.xml
